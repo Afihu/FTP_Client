@@ -218,10 +218,51 @@ public class FTPClient {
      * Upload a file to the server
      */
     public boolean uploadFile(String localFile, String remoteFile) throws IOException {
-        // Implementation similar to downloadFile but in reverse
-        // We'll include this in a future update
-        // For now, return false to indicate not implemented
-        return false;
+        if (!isLoggedIn) {
+            throw new IOException("Not logged in");
+        }
+
+        // Set binary mode
+        sendCommand("TYPE I");
+        String response = readResponse();
+        if (!response.startsWith("200")) {
+            throw new IOException("Could not set binary mode. Response: " + response);
+        }
+
+        // Enter passive mode
+        sendCommand("PASV");
+        response = readResponse();
+        if (!response.startsWith("227")) {
+            throw new IOException("Could not enter passive mode. Response: " + response);
+        }
+
+        // Parse passive mode response to get data port
+        Socket dataSocket = createDataSocket(response);
+
+        // Send STOR command
+        sendCommand("STOR " + remoteFile);
+        response = readResponse();
+        if (!response.startsWith("150")) {
+            dataSocket.close();
+            throw new IOException("Could not start file upload. Response: " + response);
+        }
+
+        // Read local file and send to data socket
+        try (BufferedInputStream fileIn = new BufferedInputStream(new FileInputStream(localFile));
+             BufferedOutputStream dataOut = new BufferedOutputStream(dataSocket.getOutputStream())) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = fileIn.read(buffer)) != -1) {
+                dataOut.write(buffer, 0, bytesRead);
+            }
+            dataOut.flush();
+        } finally {
+            dataSocket.close();
+        }
+
+        // Read final response
+        response = readResponse();
+        return response.startsWith("226");
     }
     
     /**
