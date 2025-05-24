@@ -27,6 +27,10 @@ public class FTPCommands {
         return client.uploadFile(localFile, remoteName);
     }
 
+    public boolean cwd(String directory) throws IOException {
+        return client.changeDirectory(directory);
+    }
+
     public void quit() throws IOException {
         client.disconnect();
     }

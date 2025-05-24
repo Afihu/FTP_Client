@@ -91,6 +91,21 @@ public class CLI {
                             System.err.println("failed: " + ex.getMessage());
                         }
                         break;
+                    case "cd":
+                    case "cwd":
+                        if (parts.length < 2) {
+                            System.err.println("Usage: cd <directory>");
+                        } else {
+                            try {
+                                boolean ok = ftp.cwd(parts[1]);
+                                System.out.println(ok
+                                    ? "Directory changed to “" + parts[1] + "”"
+                                    : "Failed to change directory");
+                            } catch (IOException ex) {
+                                System.err.println("Error: " + ex.getMessage());
+                            }
+                        }
+                        break;
 
                     default:
                         System.err.println("Unknown command: " + cmd);
