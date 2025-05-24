@@ -31,6 +31,10 @@ public class FTPCommands {
         return client.changeDirectory(directory);
     }
 
+    public boolean mkd(String directory) throws IOException {
+        return client.makeDirectory(directory);
+    }
+
     public void quit() throws IOException {
         client.disconnect();
     }

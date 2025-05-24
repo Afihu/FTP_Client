@@ -107,6 +107,22 @@ public class CLI {
                         }
                         break;
 
+                    case "mkd":
+                    case "mkdir":
+                        if (parts.length < 2) {
+                            System.err.println("Usage: mkd <directory>");
+                        } else {
+                            try {
+                                boolean ok = ftp.mkd(parts[1]);
+                                System.out.println(ok
+                                    ? "Directory created: " + parts[1]
+                                    : "Failed to create directory");
+                            } catch (IOException ex) {
+                                System.err.println("Error: " + ex.getMessage());
+                            }
+                        }
+                        break;
+
                     default:
                         System.err.println("Unknown command: " + cmd);
                 }

@@ -129,6 +129,17 @@ public class FTPClient {
         return resp.getCode() == 250;
     }
 
+    /** Make a new directory on the server. */
+    public boolean makeDirectory(String dir) throws IOException {
+        if (!isLoggedIn) {
+            throw new IOException("Not logged in");
+        }
+        sendCommand("MKD " + dir);
+        FTPResponse resp = readResponse();
+        // 257 = “\"dirname\" created.” or any 2xx
+        return resp.getCode() == 257 || resp.isPositiveCompletion();
+    }
+
     /** Download a file from the server. */
     public boolean downloadFile(String remoteFile, String localFile) throws IOException {
         if (!isLoggedIn) {
