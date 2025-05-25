@@ -847,7 +847,7 @@ public class MainController {
         confirmAlert.setTitle("Confirm Delete");
         confirmAlert.setHeaderText("Delete " + (file.isDirectory() ? "folder" : "file") + "?");
         confirmAlert.setContentText("Are you sure you want to delete \"" + fileName + "\"?" + 
-                                (file.isDirectory() ? "\n\nThis will delete the folder and all its contents." : ""));
+                                (file.isDirectory() ? "\n\nThis can only delete an empty folder. \nDeleting a non-empty one will result in error." : ""));
         
         Optional<ButtonType> result = confirmAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -879,7 +879,7 @@ public class MainController {
         confirmAlert.setTitle("Confirm Delete");
         confirmAlert.setHeaderText("Delete server " + (parsedFile.isDirectory ? "folder" : "file") + "?");
         confirmAlert.setContentText("Are you sure you want to delete \"" + parsedFile.name + "\"?" + 
-                                (parsedFile.isDirectory ? "\n\nThis will delete the folder and all its contents." : ""));
+                                (parsedFile.isDirectory ? "\n\nThis can only delete an empty folder. \nDeleting a non-empty one will result in error." : ""));
         
         Optional<ButtonType> result = confirmAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
