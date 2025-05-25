@@ -227,6 +227,28 @@ public class FTPClient {
         return done.getCode() == 226;
     }
 
+    /** Delete a file on the server. */
+    public boolean deleteFile(String filename) throws IOException {
+        if (!isLoggedIn) {
+            throw new IOException("Not logged in");
+        }
+        sendCommand("DELE " + filename);
+        FTPResponse resp = readResponse();
+        // 250 = “Requested file action okay, completed”
+        return resp.getCode() == 250 || resp.isPositiveCompletion();
+    }
+
+    /** Remove (delete) an empty directory on the server. */
+    public boolean removeDirectory(String directory) throws IOException {
+        if (!isLoggedIn) {
+            throw new IOException("Not logged in");
+        }
+        sendCommand("RMD " + directory);
+        FTPResponse resp = readResponse();
+        // 250 = “Requested file action okay, completed”
+        return resp.getCode() == 250 || resp.isPositiveCompletion();
+    }
+
     /** Disconnect from the FTP server. */
     public void disconnect() {
         if (isConnected) {
