@@ -223,7 +223,8 @@
             
             <!-- Progress bar for transfers -->
             <ProgressBar fx:id="transferProgressBar" layoutX="14.0" layoutY="405.0" prefWidth="160.0" visible="false" />
-            
+            <Button fx:id="deleteButton" layoutX="85.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleDelete" text="Delete" textFill="RED" />
+          
           </children>
         </AnchorPane>
       </items>
