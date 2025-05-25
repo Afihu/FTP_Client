@@ -1,3 +1,9 @@
+
+/*
+ * FTP Client Command Line Interface (Legacy)
+ * This was created as a simple testing method for the FTPCommands class.s
+*/
+
 package com.ftpclient.ftp;
 
 import java.io.IOException;
