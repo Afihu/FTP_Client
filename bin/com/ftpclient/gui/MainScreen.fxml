@@ -40,6 +40,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -143,21 +144,86 @@
                   <Button fx:id="disconnectButton" layoutX="158.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleDisconnect" text="Disconnect" />
           </children>
         </AnchorPane>
-        <AnchorPane minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="398.0">
+               <AnchorPane minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="398.0">
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Client" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" />
             <ListView fx:id="clientFileList" layoutX="0.0" layoutY="41.0" prefHeight="230.0" prefWidth="398.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            
             <Label layoutX="14.0" layoutY="275.0" text="Server" textAlignment="CENTER" textFill="#9f9f9f">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
             <ListView fx:id="serverFileList" layoutX="0.0" layoutY="308.0" prefHeight="230.0" prefWidth="398.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            
+            <!-- CLIENT NAVIGATION CONTROLS -->
+            <TextField fx:id="clientDirectoryField" layoutX="114.0" layoutY="15.0" promptText="Enter local path" />
+            <Button fx:id="clientUpButton" layoutX="82.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleClientUp" text="Up" />
+            <Button fx:id="clientGoButton" layoutX="264.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleClientGo" text="Go" />
+            <Button fx:id="clientNewFolderButton" layoutX="296.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleClientNewFolder" text="New Folder" />
+            
+            <!-- SERVER NAVIGATION CONTROLS -->
+            <TextField fx:id="serverDirectoryField" layoutX="114.0" layoutY="276.0" promptText="Enter server path" />
+            <Button fx:id="serverUpButton" layoutX="82.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleServerUp" text="Up" />
+            <Button fx:id="serverGoButton" layoutX="264.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleServerGo" text="Go" />
+            <Button fx:id="serverNewFolderButton" layoutX="296.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleServerNewFolder" text="New Folder" />
           </children>
         </AnchorPane>
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            
+            <!-- File Details Display -->
+            <Label layoutX="14.0" layoutY="50.0" text="File Name:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            <Label fx:id="fileNameLabel" layoutX="14.0" layoutY="70.0" text="-" textFill="#333333">
+              <font><Font size="11.0" /></font>
+            </Label>
+            
+            <Label layoutX="14.0" layoutY="95.0" text="Size:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            <Label fx:id="fileSizeLabel" layoutX="14.0" layoutY="115.0" text="-" textFill="#333333">
+              <font><Font size="11.0" /></font>
+            </Label>
+            
+            <Label layoutX="14.0" layoutY="140.0" text="Type:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            <Label fx:id="fileTypeLabel" layoutX="14.0" layoutY="160.0" text="-" textFill="#333333">
+              <font><Font size="11.0" /></font>
+            </Label>
+            
+            <Label layoutX="14.0" layoutY="185.0" text="Modified:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            <Label fx:id="lastModifiedLabel" layoutX="14.0" layoutY="205.0" prefWidth="160.0" text="-" textFill="#333333" wrapText="true">
+              <font><Font size="11.0" /></font>
+            </Label>
+            
+            <Label layoutX="14.0" layoutY="235.0" text="Path:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            <Label fx:id="filePathLabel" layoutX="14.0" layoutY="255.0" prefWidth="160.0" text="-" textFill="#333333" wrapText="true">
+              <font><Font size="10.0" /></font>
+            </Label>
+
+            <!-- Transfer Controls -->
+            <Label layoutX="14.0" layoutY="320.0" text="Transfer:" textFill="#666666">
+              <font><Font size="12.0" /></font>
+            </Label>
+            
+            <Button fx:id="uploadButton" disable="true" layoutX="14.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleUploadSelected" prefWidth="80.0" text="Upload →" />
+            <Button fx:id="downloadButton" disable="true" layoutX="100.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleDownloadSelected" prefHeight="26.0" prefWidth="92.0" text="← Download" />
+            
+            <Label fx:id="transferStatusLabel" layoutX="14.0" layoutY="380.0" prefWidth="160.0" text="No file selected" textFill="#666666" wrapText="true">
+              <font><Font size="10.0" /></font>
+            </Label>
+            
+            <!-- Progress bar for transfers -->
+            <ProgressBar fx:id="transferProgressBar" layoutX="14.0" layoutY="405.0" prefWidth="160.0" visible="false" />
+            
           </children>
         </AnchorPane>
       </items>
